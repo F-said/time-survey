@@ -1,0 +1,10 @@
+p1_id <- "page1"
+p2_id <- "page2"
+p3_id <- "page3"
+p4_id <- "page4"
+p5_id <- "page5"
+p6_id <- "page6"
+p7_id <- "page7"
+p8_id <- "page7"
+
+tabset_id <- "page_select"
