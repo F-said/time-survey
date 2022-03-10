@@ -1,19 +1,53 @@
 minimum <- 1
 maximum <- 100
-shape_width <- 6
+y_const <- 0
+
+shape_width <- 4
+shape <- 16
+
+x_vals <- c(seq(from=minimum, to=maximum, by=1))
+y_vals <- c(rep(y_const, times=100))
+
+color_vec <- dict()
+color_vec$set("vec1", c("blue", "red", "green", "pink"))$
+  set("vec2", c("brown", "orange", "grey", "green"))$
+  set("vec3", c("red", "blue", "brown", "green"))$
+  set("vec4", c("blue", "red", "grey", "pink"))
+
+line <- function() {
+  plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="")
+}
 
 # function to create and update selection axis
-select_line <- function(yesterday, tomorrow) {
-  values <- c(seq(from=minimum, to=maximum, by=1))
-  
-  line <- plot(0, xlim=c(minimum, maximum), axes=FALSE, type="n", xlab="", ylab="") + points(50, -1)
-  axis(1, at=values, lwd=shape_width, lwd.tick=0, labels=FALSE)
-  if (yesterday) {
-    line <- line + points(40, -1)
-  } 
-  if (tomorrow) {
-    line <- line + points(60, -1)
+today_line <- function() {
+  plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="") + 
+    points(45, y_const, cex=shape_width/2, pch=16) + points(50, y_const, cex=shape_width/2, pch=shape) 
+}
+
+past_line <- function() {
+  plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="") + 
+    points(45, y_const, cex=shape_width/2, pch=16)
+}
+
+future_line <- function() {
+  plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="") + 
+    points(45, y_const, cex=shape_width/2, pch=shape) + points(50, y_const, cex=shape_width/2, pch=shape) +
+    points(55, y_const, cex=shape_width/2, pch=shape)
+}
+
+interact_line <- function(clicks, vec_label) {
+  handle <- plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="") + 
+    points(45, y_const, cex=shape_width/2, pch=shape) + points(50, y_const, cex=shape_width/2, pch=shape) +
+    points(55, y_const, cex=shape_width/2, pch=shape)
+  i <- 1
+  for (click in clicks) {
+    handle <- handle + points(clicks[i], y_const, col=color_vec$get(vec_label)[i], 
+                              cex=shape_width/2, pch=shape)
+    i <- (i + 1) %% 5
+    # R, this wouldn't be necessary if your arrays started with 0
+    if (i == 0) {
+      i <- 1
+    }
   }
-  
-  line
+  handle
 }
