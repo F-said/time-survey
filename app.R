@@ -159,7 +159,8 @@ server <- function(input, output, session) {
   output$page2 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("This is yesterday.")),actionButton("page2Complete", "Next"),
+             h3("When you were a baby, the marker was here."),
+             tags$img(src="/baby-emoji.png", width="5%")),actionButton("page2Complete", "Next"),
       plotOutput("past_line"))
   })
   observeEvent(input$page2Complete, {
@@ -171,8 +172,9 @@ server <- function(input, output, session) {
   output$page3 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("This is today")),actionButton("page3Complete", "Next"),
-      plotOutput("today_line"))
+        h3("When you will be a grown up, the marker will be here."),
+        tags$img(src="/person-emoji.png", width="5%")),actionButton("page3Complete", "Next"),
+      plotOutput("future_line"))
   })
   observeEvent(input$page3Complete, {
     hideTab(tabset_id, "Present_2")
@@ -183,8 +185,9 @@ server <- function(input, output, session) {
   output$page4 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("This is tomorrow")),actionButton("page4Complete", "Next"),
-      plotOutput("future_line"))
+        h3("Today, the marker is here."),
+        tags$img(src="/kid-emoji.png", width="5%")),actionButton("page4Complete", "Next"),
+      plotOutput("today_line"))
   })
   observeEvent(input$page4Complete, {
     hideTab(tabset_id, "Present_3")
@@ -271,9 +274,9 @@ server <- function(input, output, session) {
   output$page11 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question8")),actionButton("page11complete", "Next"))
+             h3("Question8")),actionButton("page11Complete", "Next"))
   })
-  observeEvent(input$page10Complete, {
+  observeEvent(input$page11Complete, {
     hideTab(tabset_id, "Question_8")
     showTab(tabset_id, "Question_9")
     queryList$index <- queryList$index + 1
@@ -283,17 +286,116 @@ server <- function(input, output, session) {
   output$page12 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question9")),actionButton("page12complete", "Next"))
+             h3("Question9")),actionButton("page12Complete", "Next"))
   })
-  observeEvent(input$page10Complete, {
+  observeEvent(input$page12Complete, {
     hideTab(tabset_id, "Question_9")
     showTab(tabset_id, "Question_10")
 
     # Reset clicks, but store in final_data
-    queryList$index <- c()
+    queryList$values <- c()
+    queryList$key_val <- "vec3"
     queryList$index <- 1
   })
   
+  # Make UI for Question 10
+  output$page13 <- renderUI({
+    fluidRow(
+      column(8, align="center", offset = 2,
+             h3("Question10")),actionButton("page13Complete", "Next"))
+  })
+  observeEvent(input$page13Complete, {
+    hideTab(tabset_id, "Question_10")
+    showTab(tabset_id, "Question_11")
+    queryList$index <- queryList$index + 1
+  })
+  
+  # Make UI for Question 11
+  output$page14 <- renderUI({
+    fluidRow(
+      column(8, align="center", offset = 2,
+             h3("Question11")),actionButton("page14Complete", "Next"))
+  })
+  observeEvent(input$page14Complete, {
+    hideTab(tabset_id, "Question_11")
+    showTab(tabset_id, "Question_12")
+    queryList$index <- queryList$index + 1
+  })
+  
+  # Make UI for Question 12
+  output$page15 <- renderUI({
+    fluidRow(
+      column(8, align="center", offset = 2,
+             h3("Question12")),actionButton("page15Complete", "Next"))
+  })
+  observeEvent(input$page15Complete, {
+    hideTab(tabset_id, "Question_12")
+    showTab(tabset_id, "Question_13")
+    queryList$index <- queryList$index + 1
+  })
+  
+  # Make UI for Question 13
+  output$page16 <- renderUI({
+    fluidRow(
+      column(8, align="center", offset = 2,
+             h3("Question13")),actionButton("page16Complete", "Next"))
+  })
+  observeEvent(input$page16Complete, {
+    hideTab(tabset_id, "Question_13")
+    showTab(tabset_id, "Question_14")
+    
+    # Reset clicks, but store in final_data
+    queryList$values <- c()
+    queryList$key_val <- "vec4"
+    queryList$index <- 1
+  })
+  
+  # Make UI for Question 14
+  output$page17 <- renderUI({
+    fluidRow(
+      column(8, align="center", offset = 2,
+             h3("Question14")),actionButton("page17Complete", "Next"))
+  })
+  observeEvent(input$page17Complete, {
+    hideTab(tabset_id, "Question_14")
+    showTab(tabset_id, "Question_15")
+    queryList$index <- queryList$index + 1
+  })
+  
+  # Make UI for Question 15
+  output$page18 <- renderUI({
+    fluidRow(
+      column(8, align="center", offset = 2,
+             h3("Question15")),actionButton("page18Complete", "Next"))
+  })
+  observeEvent(input$page18Complete, {
+    hideTab(tabset_id, "Question_15")
+    showTab(tabset_id, "Question_16")
+    queryList$index <- queryList$index + 1
+  })
+  
+  # Make UI for Question 16
+  output$page19 <- renderUI({
+    fluidRow(
+      column(8, align="center", offset = 2,
+             h3("Question16")),actionButton("page19Complete", "Next"))
+  })
+  observeEvent(input$page19Complete, {
+    hideTab(tabset_id, "Question_16")
+    showTab(tabset_id, "Question_17")
+    queryList$index <- queryList$index + 1
+  })
+  
+  # Make UI for Question 17
+  output$page20 <- renderUI({
+    fluidRow(
+      column(8, align="center", offset = 2,
+             h3("Question17")),actionButton("page20Complete", "Next"))
+  })
+  observeEvent(input$page20Complete, {
+    hideTab(tabset_id, "Question_17")
+    showTab(tabset_id, "Done")
+  })
   
   # Make UI for page 10
   output$page21 <- renderUI({

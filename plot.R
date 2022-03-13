@@ -10,9 +10,9 @@ y_vals <- c(rep(y_const, times=100))
 
 color_vec <- dict()
 color_vec$set("vec1", c("blue", "red", "green", "pink"))$
-  set("vec2", c("brown", "orange", "grey", "green"))$
+  set("vec2", c("brown", "orange", "gray", "green"))$
   set("vec3", c("red", "blue", "brown", "green"))$
-  set("vec4", c("blue", "red", "grey", "pink"))
+  set("vec4", c("blue", "red", "gray", "pink"))
 
 line <- function() {
   plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="")
@@ -21,24 +21,27 @@ line <- function() {
 # function to create and update selection axis
 today_line <- function() {
   plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="") + 
-    points(45, y_const, cex=shape_width/2, pch=16) + points(50, y_const, cex=shape_width/2, pch=shape) 
+    points(35, y_const, cex=shape_width/2, pch=16) + 
+    points(50, y_const, cex=shape_width/2, pch=shape) +
+    points(65, y_const, cex=shape_width/2, pch=shape)
 }
 
 past_line <- function() {
   plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="") + 
-    points(45, y_const, cex=shape_width/2, pch=16)
+    points(35, y_const, cex=shape_width/2, pch=16)
 }
 
 future_line <- function() {
   plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="") + 
-    points(45, y_const, cex=shape_width/2, pch=shape) + points(50, y_const, cex=shape_width/2, pch=shape) +
-    points(55, y_const, cex=shape_width/2, pch=shape)
+    points(35, y_const, cex=shape_width/2, pch=shape) +
+    points(65, y_const, cex=shape_width/2, pch=shape)
 }
 
 interact_line <- function(clicks, vec_label) {
   handle <- plot(x_vals, y_vals, axes=FALSE, type="l", lwd=shape_width, xlab="", ylab="") + 
-    points(45, y_const, cex=shape_width/2, pch=shape) + points(50, y_const, cex=shape_width/2, pch=shape) +
-    points(55, y_const, cex=shape_width/2, pch=shape)
+    points(35, y_const, cex=shape_width/2, pch=shape) + 
+    points(50, y_const, cex=shape_width/2, pch=shape) +
+    points(65, y_const, cex=shape_width/2, pch=shape)
   i <- 1
   for (click in clicks) {
     handle <- handle + points(clicks[i], y_const, col=color_vec$get(vec_label)[i], 
