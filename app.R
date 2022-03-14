@@ -180,11 +180,14 @@ server <- function(input, output, session) {
     showTab(tabset_id, "Present_1")
   })
   
+  ##AK question: how can we Add text to empty slide
+  ##text: This is a timeline. It shows when different things happen. The line starts in the past and goes to the future. 
+  
   # Make UI for yesterday
   output$page2 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("When you were a baby, the marker was here."),
+             h3("So it goes from when you were a baby"),
              img(src="baby-emoji.png", width="5%")),actionButton("page2Complete", "Next"),
       renderPlot({
         past_line()
@@ -199,7 +202,7 @@ server <- function(input, output, session) {
   output$page3 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("When you will be a grown up, the marker will be here."),
+        h3("to when you're going to be a gorwn up."),
         img(src="person-emoji.png", width="5%")),actionButton("page3Complete", "Next"),
       renderPlot({
         future_line()
@@ -214,7 +217,7 @@ server <- function(input, output, session) {
   output$page4 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("Today, the marker is here."),
+        h3("And here in the middle is right now."),
         img(src="kid-emoji.png", width="5%")),actionButton("page4Complete", "Next"),
       renderPlot({
         today_line()
@@ -229,7 +232,7 @@ server <- function(input, output, session) {
   output$page5 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("Question2")),actionButton("page5Complete", "Next"))
+        h3("When did you eat breakfast today? Think about when you ate breakfast today. Draw a line for when you ate breakfast today.")),actionButton("page5Complete", "Next"))
   })
   observeEvent(input$page5Complete, {
     hideTab(tabset_id, "Question_2")
@@ -238,10 +241,11 @@ server <- function(input, output, session) {
   })
   
   # Make UI for Question 3
+  ##AK question: how can we add age+1 to the text?
   output$page6 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("Question3")),actionButton("page6Complete", "Next"))
+        h3("When are you going to turn (Age + 1)? Think about when you are going to turn (Age + 1). Draw a line for when you are going to turn (Age +1) ")),actionButton("page6Complete", "Next"))
   })
   observeEvent(input$page6Complete, {
     hideTab(tabset_id, "Question_3")
@@ -253,7 +257,7 @@ server <- function(input, output, session) {
   output$page7 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("Question4")),actionButton("page7Complete", "Next"))
+        h3("When are you going to eat dinner today? Think about when you are going to eat dinner today. Draw a line when for you are going to eat dinner today.")),actionButton("page7Complete", "Next"))
   })
   observeEvent(input$page7Complete, {
     hideTab(tabset_id, "Question_4")
@@ -262,10 +266,11 @@ server <- function(input, output, session) {
   })
   
   # Make UI for Question 5
+  ##AK question: how can we add age-1 to the text?
   output$page8 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question5")),actionButton("page8Complete", "Next"))
+             h3("When did you have your birthday and turn (Age-1)? Think about when you turned (Age -1). Draw a line for when you turned [age – 1] ")),actionButton("page8Complete", "Next"))
   })
   observeEvent(input$page8Complete, {
     hideTab(tabset_id, "Question_5")
@@ -280,11 +285,16 @@ server <- function(input, output, session) {
     queryList$index <- 1
   })
   
+  ##AK question: how can we add text to empty slide?
+  ##text: This line also shows when things happen.
+  
+  ##AK question: can we hide the previous timeline? right now it shows up below the current one...
+  
   # Make UI for yesterday
   output$page9 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("When you were a baby, the marker was here."),
+             h3(" Remember, it goes from the time when you were a baby"),
              img(src="baby-emoji.png", width="5%")),actionButton("page9Complete", "Next"),
       renderPlot({
         past_line()
@@ -299,7 +309,7 @@ server <- function(input, output, session) {
   output$page10 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("When you will be a grown up, the marker will be here."),
+             h3("to the time when you are going to be a grown-up."),
              img(src="person-emoji.png", width="5%")),actionButton("page10Complete", "Next"),
       renderPlot({
         future_line()
@@ -314,7 +324,7 @@ server <- function(input, output, session) {
   output$page11 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Today, the marker is here."),
+             h3("And right now goes here."),
              img(src="kid-emoji.png", width="5%")),actionButton("page11Complete", "Next"),
       renderPlot({
         today_line()
@@ -325,11 +335,13 @@ server <- function(input, output, session) {
     showTab(tabset_id, "Question_6")
   })
   
+  ##AK question: how can we add an extra line of text: "You’re going to draw lines to show me when some other things happen."
+  
   # Make UI for Question 6
   output$page12 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question6")),actionButton("page12Complete", "Next"))
+             h3("Now you’re going to show me where last week goes. Where does last week go? Can you draw a line for last week?")),actionButton("page12Complete", "Next"))
   })
   observeEvent(input$page12Complete, {
     hideTab(tabset_id, "Question_6")
@@ -341,7 +353,7 @@ server <- function(input, output, session) {
   output$page13 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question7")),actionButton("page13Complete", "Next"))
+             h3("Now you’re going to show me where one day from now goes. Where does one day from now go? Can you draw a line for tomorrow?")),actionButton("page13Complete", "Next"))
   })
   observeEvent(input$page13Complete, {
     hideTab(tabset_id, "Question_7")
@@ -353,7 +365,7 @@ server <- function(input, output, session) {
   output$page14 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question8")),actionButton("page14Complete", "Next"))
+             h3("Now you’re going to show me where tonight goes. Where does tonight go? Can you draw a line for tonight? ")),actionButton("page14Complete", "Next"))
   })
   observeEvent(input$page14Complete, {
     hideTab(tabset_id, "Question_8")
@@ -365,7 +377,7 @@ server <- function(input, output, session) {
   output$page15 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question9")),actionButton("page15Complete", "Next"))
+             h3("Now you’re going to show me where two days ago goes. Where does two days ago go? Can you draw a line for two days ago? ")),actionButton("page15Complete", "Next"))
   })
   observeEvent(input$page15Complete, {
     hideTab(tabset_id, "Question_9")
@@ -380,11 +392,15 @@ server <- function(input, output, session) {
     queryList$index <- 1
   })
   
+  ##AK question: how can we add text to empty slide
+  ##text: This line also shows when things happen.
+  
+  
   # Make UI for yesterday
   output$page16 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("When you were a baby, the marker was here."),
+             h3("Remember, it goes from the time when you were a baby"),
              img(src="baby-emoji.png", width="5%")),actionButton("page16Complete", "Next"),
       renderPlot({
         past_line()
@@ -399,7 +415,7 @@ server <- function(input, output, session) {
   output$page17 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("When you will be a grown up, the marker will be here."),
+             h3("to the time when you are going to be a grown-up."),
              img(src="person-emoji.png", width="5%")),actionButton("page17Complete", "Next"),
       renderPlot({
         future_line()
@@ -410,11 +426,14 @@ server <- function(input, output, session) {
     showTab(tabset_id, "Present_9")
   })
   
+  ##AK question: how can we add an extra line of text: "You’re going to draw lines to show me when some other things happen."
+  
+  
   # Make UI for today
   output$page18 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Today, the marker is here."),
+             h3("And right now goes here"),
              img(src="kid-emoji.png", width="5%")),actionButton("page18Complete", "Next"),
       renderPlot({
         today_line()
@@ -425,11 +444,13 @@ server <- function(input, output, session) {
     showTab(tabset_id, "Question_10")
   })
   
+  ## AK question: how can we add text: You’re going to draw lines to show me when some other things happen. 
+  
   # Make UI for Question 10
   output$page19 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question10")),actionButton("page19Complete", "Next"))
+             h3("Now you’re going to show me where next week goes. Where does next week go? Can you draw a line for next week?")),actionButton("page19Complete", "Next"))
   })
   observeEvent(input$page19Complete, {
     hideTab(tabset_id, "Question_10")
@@ -441,7 +462,7 @@ server <- function(input, output, session) {
   output$page20 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question11")),actionButton("page20Complete", "Next"))
+             h3("Now you’re going to show me where a day ago goes. Where does a day ago go? Can you draw a line for a day ago?")),actionButton("page20Complete", "Next"))
   })
   observeEvent(input$page20Complete, {
     hideTab(tabset_id, "Question_11")
@@ -453,7 +474,7 @@ server <- function(input, output, session) {
   output$page21 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question12")),actionButton("page21Complete", "Next"))
+             h3("Where does two days from now go? Can you draw a line for two days from now?")),actionButton("page21Complete", "Next"))
   })
   observeEvent(input$page21Complete, {
     hideTab(tabset_id, "Question_12")
@@ -465,7 +486,7 @@ server <- function(input, output, session) {
   output$page22 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question13")),actionButton("page25Complete", "Next"))
+             h3("Where does last night go? Can you draw a line for last night?")),actionButton("page25Complete", "Next"))
   })
   observeEvent(input$page25Complete, {
     hideTab(tabset_id, "Question_13")
@@ -480,11 +501,15 @@ server <- function(input, output, session) {
     queryList$index <- 1
   })
   
+  
+  ## AK question: how can we add empty line with text
+  ## text: This is the last line! Just like the others, it shows when things happen,
+  
   # Make UI for yesterday
   output$page23 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("When you were a baby, the marker was here."),
+             h3("from when you were a baby"),
              img(src="baby-emoji.png", width="5%")),actionButton("page22Complete", "Next"),
       renderPlot({
         past_line()
@@ -499,7 +524,7 @@ server <- function(input, output, session) {
   output$page24 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("When you will be a grown up, the marker will be here."),
+             h3("to when you will be a grown-up."),
              img(src="person-emoji.png", width="5%")),actionButton("page23Complete", "Next"),
       renderPlot({
         future_line()
@@ -514,7 +539,7 @@ server <- function(input, output, session) {
   output$page25 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Today, the marker is here."),
+             h3("And right now goes here."),
              img(src="kid-emoji.png", width="5%")),actionButton("page24Complete", "Next"),
       renderPlot({
         today_line()
@@ -525,11 +550,13 @@ server <- function(input, output, session) {
     showTab(tabset_id, "Question_14")
   })
   
+  ## AK question: how can we add text: You’re going to draw lines to show me when some other things happen. Okay?
+  
   # Make UI for Question 14
   output$page26 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question14")),actionButton("page26Complete", "Next"))
+             h3("Now you’re going to show me where tomorrow goes. Where does tomorrow go? Can you draw a line for tomorrow?")),actionButton("page26Complete", "Next"))
   })
   observeEvent(input$page26Complete, {
     hideTab(tabset_id, "Question_14")
@@ -541,7 +568,7 @@ server <- function(input, output, session) {
   output$page27 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question15")),actionButton("page27Complete", "Next"))
+             h3("Now you’re going to show me where yesterday goes. Where does yesterday go? Can you draw a line for yesterday? ")),actionButton("page27Complete", "Next"))
   })
   observeEvent(input$page27Complete, {
     hideTab(tabset_id, "Question_15")
@@ -553,7 +580,7 @@ server <- function(input, output, session) {
   output$page28 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question16")),actionButton("page28Complete", "Next"))
+             h3("Where does they day after tomorrow go? Can you draw a line for the day after tomorrow?")),actionButton("page28Complete", "Next"))
   })
   observeEvent(input$page28Complete, {
     hideTab(tabset_id, "Question_16")
@@ -565,7 +592,7 @@ server <- function(input, output, session) {
   output$page29 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-             h3("Question17")),actionButton("page29Complete", "Next"))
+             h3("Where does the day before yesterday go? Can you draw a line for the day before yesterday? ")),actionButton("page29Complete", "Next"))
   })
   observeEvent(input$page29Complete, {
     hideTab(tabset_id, "Question_17")
