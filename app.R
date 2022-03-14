@@ -229,7 +229,7 @@ server <- function(input, output, session) {
   output$page5 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("When did the Soviet Union dissolve?")),actionButton("page5Complete", "Next"))
+        h3("Question2")),actionButton("page5Complete", "Next"))
   })
   observeEvent(input$page5Complete, {
     hideTab(tabset_id, "Question_2")
@@ -241,7 +241,7 @@ server <- function(input, output, session) {
   output$page6 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("When did dinosaurs go extinct?")),actionButton("page6Complete", "Next"))
+        h3("Question3")),actionButton("page6Complete", "Next"))
   })
   observeEvent(input$page6Complete, {
     hideTab(tabset_id, "Question_3")
@@ -253,8 +253,7 @@ server <- function(input, output, session) {
   output$page7 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("When did Jamiroquai release his hit single 'Virtual Insanity' to earn
-        a Grammy in the 1997 Nominations?")),actionButton("page7Complete", "Next"))
+        h3("Question4")),actionButton("page7Complete", "Next"))
   })
   observeEvent(input$page7Complete, {
     hideTab(tabset_id, "Question_4")
