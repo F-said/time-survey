@@ -185,7 +185,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("When you were a baby, the marker was here."),
-             tags$img(src="/baby-emoji.png", width="5%")),actionButton("page2Complete", "Next"),
+             img(src="baby-emoji.png", width="5%")),actionButton("page2Complete", "Next"),
       renderPlot({
         past_line()
       }))
@@ -200,7 +200,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
         h3("When you will be a grown up, the marker will be here."),
-        tags$img(src="/person-emoji.png", width="5%")),actionButton("page3Complete", "Next"),
+        img(src="person-emoji.png", width="5%")),actionButton("page3Complete", "Next"),
       renderPlot({
         future_line()
       }))
@@ -215,7 +215,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
         h3("Today, the marker is here."),
-        tags$img(src="/kid-emoji.png", width="5%")),actionButton("page4Complete", "Next"),
+        img(src="kid-emoji.png", width="5%")),actionButton("page4Complete", "Next"),
       renderPlot({
         today_line()
       }))
@@ -229,7 +229,7 @@ server <- function(input, output, session) {
   output$page5 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("Question2")),actionButton("page5Complete", "Next"))
+        h3("When did the Soviet Union dissolve?")),actionButton("page5Complete", "Next"))
   })
   observeEvent(input$page5Complete, {
     hideTab(tabset_id, "Question_2")
@@ -241,7 +241,7 @@ server <- function(input, output, session) {
   output$page6 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("Question3")),actionButton("page6Complete", "Next"))
+        h3("When did dinosaurs go extinct?")),actionButton("page6Complete", "Next"))
   })
   observeEvent(input$page6Complete, {
     hideTab(tabset_id, "Question_3")
@@ -253,7 +253,8 @@ server <- function(input, output, session) {
   output$page7 <- renderUI({
     fluidRow(
       column(8, align="center", offset = 2,
-        h3("Question4")),actionButton("page7Complete", "Next"))
+        h3("When did Jamiroquai release his hit single 'Virtual Insanity' to earn
+        a Grammy in the 1997 Nominations?")),actionButton("page7Complete", "Next"))
   })
   observeEvent(input$page7Complete, {
     hideTab(tabset_id, "Question_4")
@@ -285,7 +286,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("When you were a baby, the marker was here."),
-             tags$img(src="/baby-emoji.png", width="5%")),actionButton("page9Complete", "Next"),
+             img(src="baby-emoji.png", width="5%")),actionButton("page9Complete", "Next"),
       renderPlot({
         past_line()
       }))
@@ -300,7 +301,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("When you will be a grown up, the marker will be here."),
-             tags$img(src="/person-emoji.png", width="5%")),actionButton("page10Complete", "Next"),
+             img(src="person-emoji.png", width="5%")),actionButton("page10Complete", "Next"),
       renderPlot({
         future_line()
       }))
@@ -315,7 +316,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("Today, the marker is here."),
-             tags$img(src="/kid-emoji.png", width="5%")),actionButton("page11Complete", "Next"),
+             img(src="kid-emoji.png", width="5%")),actionButton("page11Complete", "Next"),
       renderPlot({
         today_line()
       }))
@@ -385,7 +386,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("When you were a baby, the marker was here."),
-             tags$img(src="/baby-emoji.png", width="5%")),actionButton("page16Complete", "Next"),
+             img(src="baby-emoji.png", width="5%")),actionButton("page16Complete", "Next"),
       renderPlot({
         past_line()
       }))
@@ -400,7 +401,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("When you will be a grown up, the marker will be here."),
-             tags$img(src="/person-emoji.png", width="5%")),actionButton("page17Complete", "Next"),
+             img(src="person-emoji.png", width="5%")),actionButton("page17Complete", "Next"),
       renderPlot({
         future_line()
       }))
@@ -415,7 +416,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("Today, the marker is here."),
-             tags$img(src="/kid-emoji.png", width="5%")),actionButton("page18Complete", "Next"),
+             img(src="kid-emoji.png", width="5%")),actionButton("page18Complete", "Next"),
       renderPlot({
         today_line()
       }))
@@ -485,7 +486,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("When you were a baby, the marker was here."),
-             tags$img(src="/baby-emoji.png", width="5%")),actionButton("page22Complete", "Next"),
+             img(src="baby-emoji.png", width="5%")),actionButton("page22Complete", "Next"),
       renderPlot({
         past_line()
       }))
@@ -500,7 +501,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("When you will be a grown up, the marker will be here."),
-             tags$img(src="/person-emoji.png", width="5%")),actionButton("page23Complete", "Next"),
+             img(src="person-emoji.png", width="5%")),actionButton("page23Complete", "Next"),
       renderPlot({
         future_line()
       }))
@@ -515,7 +516,7 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("Today, the marker is here."),
-             tags$img(src="/kid-emoji.png", width="5%")),actionButton("page24Complete", "Next"),
+             img(src="kid-emoji.png", width="5%")),actionButton("page24Complete", "Next"),
       renderPlot({
         today_line()
       }))
@@ -578,7 +579,7 @@ server <- function(input, output, session) {
       fluidRow(
         column(8, align="center", offset = 2,
                h3("Thank you for your time!"),
-               tags$img(src = "/thank-you-youre-pawsome.jpg", width = "50%")),
+               img(src = "/thank-you-youre-pawsome.jpg", width = "50%")),
         fluidRow(
           column(8, align="center", offset = 2,
                  actionButton("close", "Close")))
