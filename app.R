@@ -28,6 +28,10 @@ ui <- fluidPage(
       )
     )
   ),
+  # TODO: Much like the present_line and render_line are independent, why don't
+  # migrate away from this tab implementation and just have a list of questions?
+  # will be easier to debug, easier to expand, lighter code, all around better
+  # implementation. The only problem is that we have to remove images
   fluidRow(
     column(12,id="plot_present",
            plotOutput("present_line")
@@ -555,7 +559,7 @@ server <- function(input, output, session) {
       fluidRow(
         column(8, align="center", offset = 2,
                h3("Thank you for your time!"),
-               img(src = "/thank-you-youre-pawsome.jpg", width = "50%")),
+               img(src = "thank-you-youre-pawsome.jpg", width = "50%")),
         fluidRow(
           column(8, align="center", offset = 2,
                  actionButton("close", "Close")))
