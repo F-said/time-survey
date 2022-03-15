@@ -16,105 +16,21 @@ ui <- fluidPage(
   useShinyjs(),
   fluidRow(
     column(12,
-      # TODO: use lapply to flatten
-      tabsetPanel(id=tabset_id, selected="page0",
-        tabPanel("Question_1",
-                 uiOutput("page0")
-        ),
-        tabPanel("Present_0",
-                 uiOutput("page1")
-        ),
-        tabPanel("Present_1", 
-                 uiOutput("page2")
-        ),
-        tabPanel("Present_2",
-                 uiOutput("page3")
-        ),
-        tabPanel("Present_3",
-                 uiOutput("page4")
-        ),
-        tabPanel("Question_2",
-                 uiOutput("page5")
-        ),
-        tabPanel("Question_3", 
-                 uiOutput("page6")
-        ),
-        tabPanel("Question_4",
-                 uiOutput("page7")
-        ),
-        tabPanel("Question_5",
-                 uiOutput("page8")
-        ),
-        tabPanel("Present_4", 
-                 uiOutput("page9")
-        ),
-        tabPanel("Present_5",
-                 uiOutput("page10")
-        ),
-        tabPanel("Present_6",
-                 uiOutput("page11")
-        ),
-        tabPanel("Present_7",
-                 uiOutput("page12")
-        ),
-        tabPanel("Question_6",
-                 uiOutput("page13")
-        ),
-        tabPanel("Question_7",
-                 uiOutput("page14")
-        ),
-        tabPanel("Question_8",
-                 uiOutput("page15")
-        ),
-        tabPanel("Question_9",
-                 uiOutput("page16")
-        ),
-        tabPanel("Present_8", 
-                 uiOutput("page17")
-        ),
-        tabPanel("Present_9",
-                 uiOutput("page18")
-        ),
-        tabPanel("Present_10",
-                 uiOutput("page19")
-        ),
-        tabPanel("Question_10",
-                 uiOutput("page20")
-        ),
-        tabPanel("Question_11",
-                 uiOutput("page21")
-        ),
-        tabPanel("Question_12",
-                 uiOutput("page22")
-        ),
-        tabPanel("Question_13",
-                 uiOutput("page23")
-        ),
-        tabPanel("Present_11", 
-                 uiOutput("page24")
-        ),
-        tabPanel("Present_12",
-                 uiOutput("page25")
-        ),
-        tabPanel("Present_13",
-                 uiOutput("page26")
-        ),
-        tabPanel("Question_14",
-                 uiOutput("page27")
-        ),
-        tabPanel("Question_15",
-                 uiOutput("page28")
-        ),
-        tabPanel("Question_16",
-                 uiOutput("page29")
-        ),
-        tabPanel("Question_17",
-                 uiOutput("page30")
-        ),
-        tabPanel("Done", 
-                 uiOutput("page31")
+      do.call(tabsetPanel,
+        c(id=tabset_id,
+          lapply(1:length(questions$keys()), function(i) {
+            tabPanel(
+              questions$keys()[[i]],
+              uiOutput(questions$get(questions$keys()[[i]]))
+            )
+          })
         )
       )
+    )
+  ),
+  fluidRow(
+    column(12,id="plot_present",
+           plotOutput("present_line")
     )
   ),
   fluidRow(
@@ -126,10 +42,12 @@ ui <- fluidPage(
 
 # Define the server to update data
 server <- function(input, output, session) {
+  # Reactive values for plots
   queryList <- reactiveValues()
   queryList$values <- c()
   queryList$index <- 1
   queryList$key_val <- "vec1"
+  queryList$time <- "none"
   
   persist_data <- c()
   
@@ -174,6 +92,12 @@ server <- function(input, output, session) {
     queryList$values[queryList$index] <- input$plot_click$x
   })
   shinyjs::hide(id="plot_reveal")
+  
+  # Create non-clickable display that presents how timeline works
+  output$present_line <- renderPlot({
+    line(queryList$time)
+  })
+  shinyjs::hide(id="plot_present")
 
   # Make UI for page0 "How old are you?"
   output$page0 <- renderUI({
@@ -188,6 +112,7 @@ server <- function(input, output, session) {
   observeEvent(input$page0Complete, {
     hideTab(tabset_id, "Question_1")
     showTab(tabset_id, "Present_0")
+    shinyjs::show(id="plot_present")
   })
   
   # Make UI for page1 "introduce line"
@@ -196,14 +121,12 @@ server <- function(input, output, session) {
       column(8, align="center", offset = 2,
              h3("This is a timeline. It shows when different things happen. 
                 The line starts in the past and goes to the future.")),
-             actionButton("page1Complete", "Next"),
-      renderPlot({
-        line()
-      }))
+             actionButton("page1Complete", "Next"))
   })
   observeEvent(input$page1Complete, {
     hideTab(tabset_id, "Present_0")
     showTab(tabset_id, "Present_1")
+    queryList$time <- "yesterday"
   })
   
   # Make UI for yesterday
@@ -211,14 +134,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("So it goes from when you were a baby"),
-             img(src="baby-emoji.png", width="5%")),actionButton("page2Complete", "Next"),
-      renderPlot({
-        past_line()
-      }))
+             img(src="baby-emoji.png", width="5%")),actionButton("page2Complete", "Next"))
   })
   observeEvent(input$page2Complete, {
     hideTab(tabset_id, "Present_1")
     showTab(tabset_id, "Present_2")
+    queryList$time <- "tomorrow"
   })
   
   # Make UI for tomorrow
@@ -226,14 +147,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
         h3("to when you're going to be a grown up."),
-        img(src="person-emoji.png", width="5%")),actionButton("page3Complete", "Next"),
-      renderPlot({
-        future_line()
-      }))
+        img(src="person-emoji.png", width="5%")),actionButton("page3Complete", "Next"))
   })
   observeEvent(input$page3Complete, {
     hideTab(tabset_id, "Present_2")
     showTab(tabset_id, "Present_3")
+    queryList$time <- "today"
   })
   
   # Make UI for today
@@ -241,15 +160,13 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
         h3("And here in the middle is right now."),
-        img(src="kid-emoji.png", width="5%")),actionButton("page4Complete", "Next"),
-      renderPlot({
-        today_line()
-      }))
+        img(src="kid-emoji.png", width="5%")),actionButton("page4Complete", "Next"))
   })
   observeEvent(input$page4Complete, {
     hideTab(tabset_id, "Present_3")
     showTab(tabset_id, "Question_2")
     shinyjs::show(id="plot_reveal")
+    shinyjs::hide(id="plot_present")
   })
   
   # Make UI for Question 2
@@ -311,6 +228,7 @@ server <- function(input, output, session) {
     showTab(tabset_id, "Present_4")
     
     shinyjs::hide(id="plot_reveal")
+    shinyjs::show(id="plot_present")
     
     # save data to persistent store
     persist_data <- c(persist_data, queryList$values)
@@ -319,6 +237,7 @@ server <- function(input, output, session) {
     queryList$values <- c()
     queryList$key_val <- "vec2"
     queryList$index <- 1
+    queryList$time <- "none"
   })
   
   # Make UI for page9 "introduce line"
@@ -326,14 +245,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("This line also shows when things happen.")),
-      actionButton("page9Complete", "Next"),
-      renderPlot({
-        line()
-      }))
+      actionButton("page9Complete", "Next"))
   })
   observeEvent(input$page9Complete, {
     hideTab(tabset_id, "Present_4")
     showTab(tabset_id, "Present_5")
+    queryList$time <- "yesterday"
   })
   
   # Make UI for yesterday
@@ -341,14 +258,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("Remember, it goes from the time when you were a baby"),
-             img(src="baby-emoji.png", width="5%")),actionButton("page10Complete", "Next"),
-      renderPlot({
-        past_line()
-      }))
+             img(src="baby-emoji.png", width="5%")),actionButton("page10Complete", "Next"))
   })
   observeEvent(input$page10Complete, {
     hideTab(tabset_id, "Present_5")
     showTab(tabset_id, "Present_6")
+    queryList$time <- "tomorrow"
   })
   
   # Make UI for tomorrow
@@ -356,14 +271,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("to the time when you are going to be a grown-up."),
-             img(src="person-emoji.png", width="5%")),actionButton("page11Complete", "Next"),
-      renderPlot({
-        future_line()
-      }))
+             img(src="person-emoji.png", width="5%")),actionButton("page11Complete", "Next"))
   })
   observeEvent(input$page11Complete, {
     hideTab(tabset_id, "Present_6")
     showTab(tabset_id, "Present_7")
+    queryList$time <- "today"
   })
   
   # Make UI for today
@@ -371,15 +284,13 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("And right now goes here."),
-             img(src="kid-emoji.png", width="5%")),actionButton("page12Complete", "Next"),
-      renderPlot({
-        today_line()
-      }))
+             img(src="kid-emoji.png", width="5%")),actionButton("page12Complete", "Next"))
   })
   observeEvent(input$page12Complete, {
     hideTab(tabset_id, "Present_7")
     showTab(tabset_id, "Question_6")
     shinyjs::show(id="plot_reveal")
+    shinyjs::hide(id="plot_present")
   })
   
   ##AK question: how can we add an extra line of text: "You’re going to draw lines to show me when some other things happen."
@@ -439,6 +350,7 @@ server <- function(input, output, session) {
     showTab(tabset_id, "Present_8")
     
     shinyjs::hide(id="plot_reveal")
+    shinyjs::show(id="plot_present")
     
     # save data to persistent store
     persist_data <- c(persist_data, queryList$values)
@@ -447,6 +359,7 @@ server <- function(input, output, session) {
     queryList$values <- c()
     queryList$key_val <- "vec3"
     queryList$index <- 1
+    queryList$time <- "yesterday"
   })
   
   ##AK question: how can we add text to empty slide
@@ -457,14 +370,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("Remember, it goes from the time when you were a baby"),
-             img(src="baby-emoji.png", width="5%")),actionButton("page17Complete", "Next"),
-      renderPlot({
-        past_line()
-      }))
+             img(src="baby-emoji.png", width="5%")),actionButton("page17Complete", "Next"))
   })
   observeEvent(input$page17Complete, {
     hideTab(tabset_id, "Present_8")
     showTab(tabset_id, "Present_9")
+    queryList$time <- "tomorrow"
   })
   
   # Make UI for tomorrow
@@ -472,14 +383,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("to the time when you are going to be a grown-up."),
-             img(src="person-emoji.png", width="5%")),actionButton("page18Complete", "Next"),
-      renderPlot({
-        future_line()
-      }))
+             img(src="person-emoji.png", width="5%")),actionButton("page18Complete", "Next"))
   })
   observeEvent(input$page18Complete, {
     hideTab(tabset_id, "Present_9")
     showTab(tabset_id, "Present_10")
+    queryList$time <- "tomorrow"
   })
   
   ##AK question: how can we add an extra line of text: "You’re going to draw lines to show me when some other things happen."
@@ -489,15 +398,13 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("And right now goes here"),
-             img(src="kid-emoji.png", width="5%")),actionButton("page19Complete", "Next"),
-      renderPlot({
-        today_line()
-      }))
+             img(src="kid-emoji.png", width="5%")),actionButton("page19Complete", "Next"))
   })
   observeEvent(input$page19Complete, {
     hideTab(tabset_id, "Present_10")
     showTab(tabset_id, "Question_10")
     shinyjs::show(id="plot_reveal")
+    shinyjs::hide(id="plot_present")
   })
   
   ## AK question: how can we add text: You’re going to draw lines to show me when some other things happen. 
@@ -556,6 +463,7 @@ server <- function(input, output, session) {
     showTab(tabset_id, "Present_11")
     
     shinyjs::hide(id="plot_reveal")
+    shinyjs::show(id="plot_present")
     
     # save data to persistent store
     persist_data <- c(persist_data, queryList$values)
@@ -564,6 +472,7 @@ server <- function(input, output, session) {
     queryList$values <- c()
     queryList$key_val <- "vec4"
     queryList$index <- 1
+    queryList$time <- "yesterday"
   })
   
   ## AK question: how can we add empty line with text
@@ -574,14 +483,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("from when you were a baby"),
-             img(src="baby-emoji.png", width="5%")),actionButton("page24Complete", "Next"),
-      renderPlot({
-        past_line()
-      }))
+             img(src="baby-emoji.png", width="5%")),actionButton("page24Complete", "Next"))
   })
   observeEvent(input$page24Complete, {
     hideTab(tabset_id, "Present_11")
     showTab(tabset_id, "Present_12")
+    queryList$time <- "tomorrow"
   })
   
   # Make UI for tomorrow
@@ -589,14 +496,12 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("to when you will be a grown-up."),
-             img(src="person-emoji.png", width="5%")),actionButton("page25Complete", "Next"),
-      renderPlot({
-        future_line()
-      }))
+             img(src="person-emoji.png", width="5%")),actionButton("page25Complete", "Next"))
   })
   observeEvent(input$page25Complete, {
     hideTab(tabset_id, "Present_12")
     showTab(tabset_id, "Present_13")
+    queryList$time <- "today"
   })
   
   # Make UI for today
@@ -604,15 +509,13 @@ server <- function(input, output, session) {
     fluidRow(
       column(8, align="center", offset = 2,
              h3("And right now goes here."),
-             img(src="kid-emoji.png", width="5%")),actionButton("page26Complete", "Next"),
-      renderPlot({
-        today_line()
-      }))
+             img(src="kid-emoji.png", width="5%")),actionButton("page26Complete", "Next"))
   })
   observeEvent(input$page26Complete, {
     hideTab(tabset_id, "Present_13")
     showTab(tabset_id, "Question_14")
     shinyjs::show(id="plot_reveal")
+    shinyjs::hide(id="plot_present")
   })
   
   ## AK question: how can we add text: You’re going to draw lines to show me when some other things happen. Okay?
@@ -671,9 +574,10 @@ server <- function(input, output, session) {
     hideTab(tabset_id, "Question_17")
     showTab(tabset_id, "Done")
     shinyjs::hide(id="plot_reveal")
+    shinyjs::hide(id="plot_present")
   })
   
-  # Make UI for page 10
+  # Make UI for complete page
   output$page31 <- renderUI({
     fluidRow(
       fluidRow(
